@@ -4,7 +4,7 @@
             <div @click="goToFolder"
                  ref="card"
                  :loading="loading"
-                 class="card relative flex flex-wrap justify-center border border-lg border-50 overflow-hidden px-0 py-0 cursor-pointer">
+                 class="relative flex flex-wrap justify-center border border-lg border-50 overflow-hidden px-0 py-0 cursor-pointer">
 
                 <template v-if="loading">
                     <div class="rounded-lg flex items-center justify-center absolute pin z-50">

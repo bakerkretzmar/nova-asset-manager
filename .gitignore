@@ -1,8 +1,5 @@
-/build
-/vendor
 /node_modules
-package-lock.json
-composer.phar
+/vendor
 composer.lock
-phpunit.xml
-mix-manifest.json
+npm-debug.log
+package-lock.json

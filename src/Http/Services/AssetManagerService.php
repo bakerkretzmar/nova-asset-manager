@@ -1,11 +1,11 @@
 <?php
 
-namespace Infinety\Filemanager\Http\Services;
+namespace Bakerkretzmar\AssetManager\Http\Services;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class FileManagerService
+class AssetManagerService
 {
     use GetFiles;
 
@@ -96,13 +96,15 @@ class FileManagerService
     {
         $folder = $this->fixDirname($this->fixFilename($folder));
 
-        $path = $currentFolder.'/'.$folder;
+        $fullPath = $currentFolder.'/'.$folder;
 
-        if ($this->storage->has($path)) {
-            return response()->json(['error' => __('The folder exist in current path')]);
+        if ($this->storage->has($fullPath)) {
+            return response()->json([
+                'error' => 'A folder with that name already exists!'
+            ]);
         }
 
-        if ($this->storage->makeDirectory($path)) {
+        if ($this->storage->makeDirectory($fullPath)) {
             return response()->json(true);
         } else {
             return response()->json(false);
@@ -116,9 +118,9 @@ class FileManagerService
      *
      * @return  json
      */
-    public function deleteDirectory($currentFolder)
+    public function deleteDirectory($path)
     {
-        if ($this->storage->deleteDirectory($currentFolder)) {
+        if ($this->storage->deleteDirectory($path)) {
             return response()->json(true);
         } else {
             return response()->json(false);
@@ -186,12 +188,12 @@ class FileManagerService
      * Remove a file from storage.
      *
      * @param $file
-     *
      * @return  json
      */
-    public function removeFile($files)
+    public function deleteFile($path)
     {
-        if ($this->storage->delete($files)) {
+        // return response()->json(['path' => $path]);
+        if ($this->storage->delete($path)) {
             return response()->json(true);
         } else {
             return response()->json(false);

@@ -1,24 +1,22 @@
 <?php
 
-namespace Infinety\Filemanager\Http\Controllers;
+namespace Bakerkretzmar\AssetManager\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Infinety\Filemanager\Http\Services\FileManagerService;
+use Bakerkretzmar\AssetManager\Http\Services\AssetManagerService;
 
-class FilemanagerToolController extends Controller
+class AssetManagerToolController extends Controller
 {
-    /**
-     * @var mixed
-     */
+    /**  @var mixed  */
     protected $service;
 
     /**
-     * @param FileManagerService $filemanagerService
+     * @param AssetManagerService $service
      */
-    public function __construct(FileManagerService $filemanagerService)
+    public function __construct(AssetManagerService $service)
     {
-        $this->service = $filemanagerService;
+        $this->service = $service;
     }
 
     /**
@@ -42,7 +40,7 @@ class FilemanagerToolController extends Controller
      */
     public function deleteFolder(Request $request)
     {
-        return $this->service->deleteDirectory($request->current);
+        return $this->service->deleteDirectory($request->path);
     }
 
     /**
@@ -64,8 +62,8 @@ class FilemanagerToolController extends Controller
     /**
      * @param Request $request
      */
-    public function removeFile(Request $request)
+    public function deleteFile(Request $request)
     {
-        return $this->service->removeFile($request->file);
+        return $this->service->deleteFile($request->file);
     }
 }

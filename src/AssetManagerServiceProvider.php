@@ -1,39 +1,29 @@
 <?php
 
-namespace Infinety\Filemanager;
+namespace Bakerkretzmar\AssetManager;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\Events\ServingNova;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Infinety\Filemanager\Http\Middleware\Authorize;
+use Bakerkretzmar\AssetManager\Http\Middleware\Authorize;
 
-class FilemanagerServiceProvider extends ServiceProvider
+class AssetManagerServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'nova-filemanager');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'nova-asset-manager');
 
         $this->app->booted(function () {
             $this->routes();
         });
 
         Nova::serving(function (ServingNova $event) {
-            Nova::script('filemanager-field', __DIR__.'/../dist/js/field.js');
+            // Nova::script('asset-manager-field', __DIR__.'/../dist/js/field.js');
             // Nova::style('filemanager-field', __DIR__.'/../dist/css/field.css');
         });
     }
 
-    /**
-     * Register the tool's routes.
-     *
-     * @return void
-     */
     protected function routes()
     {
         if ($this->app->routesAreCached()) {
@@ -41,15 +31,10 @@ class FilemanagerServiceProvider extends ServiceProvider
         }
 
         Route::middleware(['nova', Authorize::class])
-            ->prefix('nova-vendor/infinety-es/nova-filemanager')
+            ->prefix('nova-vendor/nova-asset-manager')
             ->group(__DIR__.'/../routes/api.php');
     }
 
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
     public function register()
     {
         //

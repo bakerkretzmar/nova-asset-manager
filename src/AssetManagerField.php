@@ -1,18 +1,18 @@
 <?php
 
-namespace Infinety\Filemanager;
+namespace Bakerkretzmar\AssetManager;
 
 use Laravel\Nova\Fields\Field;
-use Infinety\Filemanager\Http\Services\FileManagerService;
+use Bakerkretzmar\AssetManager\Http\Services\AssetManagerService;
 
-class FilemanagerField extends Field
+class AssetManagerField extends Field
 {
     /**
      * The field's component.
      *
      * @var string
      */
-    public $component = 'filemanager-field';
+    public $component = 'asset-manager-field';
 
     /**
      * Set display in details and list as image or icon.
@@ -44,7 +44,7 @@ class FilemanagerField extends Field
     public function resolveInfo()
     {
         if ($this->value) {
-            $service = new FileManagerService();
+            $service = new AssetManagerService();
 
             $data = $service->getFileInfoAsArray($this->value);
 

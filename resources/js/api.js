@@ -13,21 +13,13 @@ export default {
             .then(response => response.data);
     },
 
-    createFolder(folderName, currentFolder) {
-        return window.axios
-            .post('/nova-vendor/infinety-es/nova-filemanager/actions/create-folder', {
-                folder: folderName,
-                current: currentFolder,
+    createFolder(folder, path) {
+        return Nova.request()
+            .post('/nova-vendor/nova-asset-manager/actions/create-folder', {
+                folder,
+                current: path,
             })
-            .then(response => response.data);
-    },
-
-    removeDirectory(currentFolder) {
-        return window.axios
-            .post('/nova-vendor/infinety-es/nova-filemanager/actions/delete-folder', {
-                current: currentFolder,
-            })
-            .then(response => response.data);
+            .then(response => response.data)
     },
 
     getInfo(file) {
@@ -36,9 +28,9 @@ export default {
             .then(response => response.data);
     },
 
-    removeFile(file) {
-        return window.axios
-            .post('/nova-vendor/infinety-es/nova-filemanager/actions/remove-file', { file: file })
-            .then(response => response.data);
+    deleteFile(file) {
+        return Nova.request()
+            .post('/nova-vendor/nova-asset-manager/actions/delete-file', { file })
+            .then(response => response.data)
     },
 };

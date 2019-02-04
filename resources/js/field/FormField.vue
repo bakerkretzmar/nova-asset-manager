@@ -2,32 +2,32 @@
     <default-field :field="field">
         <template slot="field">
 
-            <modal-filemanager 
+            <!-- <modal-filemanager
                 ref="filemanager"
                 :active="openModal"
                 :currentPath="currentPath"
-                v-on:open-modal="openModalCreateFolder" 
-                v-on:close-modal="closeFilemanagerModal" 
+                v-on:open-modal="openModalCreateFolder"
+                v-on:close-modal="closeFilemanagerModal"
                 v-on:update-current-path="updateCurrentPath"
                 v-on:showInfoItem="showInfoItem"
                 v-on:uploadFiles="uploadFiles"
                 :value="value">
-                    
-            </modal-filemanager>
 
-            <DetailPopup 
+            </modal-filemanager> -->
+
+            <!-- <DetailPopup
                 ref="detailPopup"
                 :info="info"
                 :active="activeInfo"
                 :popup="'true'"
-                v-on:closePreview="closePreview" 
+                v-on:closePreview="closePreview"
                 v-on:refresh="refreshCurrent"
                 v-on:selectFile="setValue"
             >
-            </DetailPopup>
+            </DetailPopup> -->
 
 
-            <create-folder ref="createFolderModal" :active="showCreateFolder" :current="currentPath" v-on:closeCreateFolderModal="closeModalCreateFolder" v-on:refresh="refreshCurrent" />
+            <!-- <create-folder ref="createFolderModal" :active="showCreateFolder" :current="currentPath" v-on:closeCreateFolderModal="closeModalCreateFolder" v-on:refresh="refreshCurrent" /> -->
 
             <UploadProgress ref="uploader" :current="currentPath" v-on:removeFile="removeFileFromUpload"></UploadProgress>
 
@@ -45,11 +45,11 @@
 
             <portal to="modals">
                 <transition name="fade">
-                    <confirm-modal-remove-file
+                    <!-- <confirm-modal-remove-file
                         v-if="removeModalOpen"
                         @confirm="removeFile"
                         @close="closeRemoveModal"
-                    />
+                    /> -->
                 </transition>
             </portal>
 
@@ -63,11 +63,11 @@
 <script>
 import { FormField, HandlesValidationErrors } from 'laravel-nova';
 import FileSelect from './custom/FileSelect';
-import ModalFileManager from '../components/ModalFileManager';
-import CreateFolderModal from '../components/CreateFolderModal';
-import DetailPopup from '../components/DetailPopup';
+// import ModalFileManager from '../components/ModalFileManager';
+// import CreateFolderModal from '../components/CreateFolderModal';
+// import DetailPopup from '../components/DetailPopup';
 import UploadProgress from '../components/UploadProgress';
-import ConfirmModalRemoveFile from '../components/ConfirmModalRemoveFile';
+// import ConfirmModalRemoveFile from '../components/ConfirmModalRemoveFile';
 
 export default {
     mixins: [FormField, HandlesValidationErrors],
@@ -76,11 +76,11 @@ export default {
 
     components: {
         'file-select': FileSelect,
-        'modal-filemanager': ModalFileManager,
-        'create-folder': CreateFolderModal,
-        DetailPopup: DetailPopup,
+        // 'modal-filemanager': ModalFileManager,
+        // 'create-folder': CreateFolderModal,
+        // DetailPopup: DetailPopup,
         UploadProgress: UploadProgress,
-        'confirm-modal-remove-file': ConfirmModalRemoveFile,
+        // 'confirm-modal-remove-file': ConfirmModalRemoveFile,
     },
 
     data: () => ({

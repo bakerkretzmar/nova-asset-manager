@@ -1,10 +1,10 @@
 <?php
 
-namespace Infinety\Filemanager\Http\Middleware;
+namespace Bakerkretzmar\AssetManager\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Infinety\Filemanager\FilemanagerTool;
+use Bakerkretzmar\AssetManager\AssetManagerTool;
 use Symfony\Component\HttpFoundation\Response;
 
 class Authorize
@@ -15,7 +15,7 @@ class Authorize
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return app(FilemanagerTool::class)->authorize($request)
+        return app(AssetManagerTool::class)->authorize($request)
         ? $next($request)
         : abort(403);
     }

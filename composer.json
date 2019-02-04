@@ -1,20 +1,20 @@
 {
-    "name": "infinety-es/nova-filemanager",
-    "description": "Filemanager tool for Laravel Nova",
+    "name": "bakerkretzmar/nova-asset-manager",
+    "description": "A Laravel Nova tool and field to manage files and images.",
     "keywords": [
         "laravel",
         "nova",
-        "filemanager"
+        "assets",
+        "asset manager"
     ],
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../../nova"
-        }
-    ],
-    "homepage": "https://github.com/krato/nova-filemanager",
+    "homepage": "https://github.com/bakerkretzmar/nova-asset-manager",
     "license": "MIT",
     "authors": [
+        {
+            "name": "Jacob Baker-Kretzmar",
+            "email": "jacob.baker@culturedays.ca",
+            "role": "Developer"
+        },
         {
             "name": "Eric Lagarda",
             "email": "eric@infinety.es",
@@ -36,18 +36,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Infinety\\Filemanager\\": "src/"
+            "Bakerkretzmar\\AssetManager\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Infinety\\Filemanager\\Tests\\": "tests"
+            "Bakerkretzmar\\AssetManager\\Tests\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Infinety\\Filemanager\\FilemanagerServiceProvider"
+                "Bakerkretzmar\\AssetManager\\AssetManagerServiceProvider"
             ]
         }
     },

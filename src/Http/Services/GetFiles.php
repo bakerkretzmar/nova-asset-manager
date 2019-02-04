@@ -1,6 +1,6 @@
 <?php
 
-namespace Infinety\Filemanager\Http\Services;
+namespace Bakerkretzmar\AssetManager\Http\Services;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
