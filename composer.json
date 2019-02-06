@@ -14,16 +14,6 @@
             "name": "Jacob Baker-Kretzmar",
             "email": "jacob.baker@culturedays.ca",
             "role": "Developer"
-        },
-        {
-            "name": "Eric Lagarda",
-            "email": "eric@infinety.es",
-            "role": "Developer"
-        },
-        {
-            "name": "InfinetyEs",
-            "email": "apps@infinety.es",
-            "role": "Maintainer"
         }
     ],
     "require": {

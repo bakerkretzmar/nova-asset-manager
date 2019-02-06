@@ -14,7 +14,7 @@ class FileController extends AssetManagerController
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function info(Request $request)
+    public function show(Request $request)
     {
         $fullPath = $this->storage->path($request->path);
 
@@ -28,9 +28,8 @@ class FileController extends AssetManagerController
      *
      * @param \Illuminate\Http\Request $request
      */
-    public function upload(Request $request)
+    public function create(Request $request)
     {
-        // If there's already a file with the same name, reject the upload
         if ($this->storage->has($request->path . '/' . $request->file->getClientOriginalName())) {
             return response('file_exists');
         }
@@ -50,7 +49,7 @@ class FileController extends AssetManagerController
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
         if ($this->storage->delete($request->path)) {
             return response('success');

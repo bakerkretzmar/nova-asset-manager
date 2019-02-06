@@ -8,7 +8,7 @@
                 <div class="p-6">
 
                     <div class="flex justify-between mb-6">
-                        <h4 class="font-bold text-80 text-lg truncate">{{ file.name }}</h4>
+                        <h4 class="font-bold text-80 text-lg truncate">{{ file.basename }}</h4>
                         <button
                             @click="handleClose"
                             type="button"
@@ -21,11 +21,11 @@
                     <div class="flex">
 
                         <div class="flex items-center justify-center w-3/5 mr-6">
-                            <template v-if="file.type == 'image'">
+                            <template v-if="file.mime == 'image'">
                                 <Preview :file="file" />
                             </template>
 
-                            <template v-else-if="file.type == 'audio'">
+                            <template v-else-if="file.mime == 'audio'">
                                 <audio
                                     controls
                                     class="w-full"
@@ -35,13 +35,13 @@
                                 </audio>
                             </template>
 
-                            <template v-else-if="file.type == 'video'">
+                            <template v-else-if="file.mime == 'video'">
                                 <video controls crossorigin playsinline>
                                     <source :src="file.url" :type="file.mime" />
                                 </video>
                             </template>
 
-                            <!-- <template v-else-if="file.type == 'pdf'">
+                            <!-- <template v-else-if="file.mime == 'pdf'">
                                 <iframe :src="file.url" width="400px" height="400px"></iframe>
                                 <object :data="file.url" type="application/pdf" width="100%" height="100%">
                                     <iframe :src="file.url" width="100%" height="100%" style="border: none;">
@@ -54,7 +54,7 @@
 
                             <template v-else>
                                 <file-icon
-                                    :type="file.type"
+                                    :type="file.mime"
                                     class="block w-1/4 m-auto"
                                 />
                             </template>
@@ -63,50 +63,47 @@
                         <div class="flex flex-col w-2/5">
                             <div class="flex flex-col mb-6">
                                 <p class="text-80 font-bold mb-2">Name</p>
-                                <p class="bg-40 rounded px-3 py-2 break-words select-text">
-                                    {{ file.name }}
-                                </p>
+                                <div class="bg-40 rounded px-3 py-2 break-words select-text">{{ file.basename }}</div>
                             </div>
 
-                            <div v-if="file.mime" class="flex flex-col mb-6">
+                            <!-- <div v-if="file.mime" class="flex flex-col mb-6">
                                 <p class="text-80 font-bold mb-2">Type</p>
                                 <p class="bg-40 rounded px-3 py-2 break-words select-text">
                                     {{ file.mime }}
                                 </p>
-                            </div>
+                            </div> -->
 
-                            <div v-if="file.date" class="flex flex-col mb-6">
+                            <div v-if="file.timestamp" class="flex flex-col mb-6">
                                 <p class="text-80 font-bold mb-2">Last modified</p>
-                                <p class="bg-40 rounded px-3 py-2 break-words select-text">
-                                    {{ formatDate(file.date) }}
-                                </p>
+                                <div class="bg-40 rounded px-3 py-2 break-words select-text">{{ formatDate(file.timestamp) }}</div>
                             </div>
 
-                            <div v-if="file.size" class="flex flex-col mb-6">
+                            <div v-if="file.size_string" class="flex flex-col mb-6">
                                 <p class="text-80 font-bold mb-2">Size</p>
-                                <p class="bg-40 rounded px-3 py-2 break-words select-text">
-                                    {{ file.size }}
-                                </p>
+                                <div class="bg-40 rounded px-3 py-2 break-words select-text">{{ file.size_string }}</div>
                             </div>
 
                             <div v-if="file.dimensions" class="flex flex-col mb-6">
                                 <p class="text-80 font-bold mb-2">Dimensions</p>
-                                <p class="bg-40 rounded px-3 py-2 break-words select-text">
-                                    {{ file.dimensions }}
-                                </p>
+                                <div class="bg-40 rounded px-3 py-2 break-words select-text">{{ file.dimensions }}</div>
                             </div>
 
                             <div v-if="file.url" class="flex flex-col mb-6">
-                                <div class="flex items-center mb-2">
-                                    <p class="text-80 font-bold mr-2">URL</p>
+                                <p class="text-80 font-bold mb-2">
+                                    URL
                                     <span
-                                        class="cursor-pointer text-primary dim"
-                                        v-copy="file.url"
+                                        ref="copy"
+                                        class="font-normal ml-1"
+                                        :class="justCopied ? 'text-80' : 'text-60'"
                                     >
-                                        <svg class="-m-1 clipboard-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M8 4c0-1.1.9-2 2-2h4a2 2 0 0 1 2 2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h2zm0 2H6v14h12V6h-2a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2zm2-2v2h4V4h-4z"/></svg>
+                                        {{ justCopied ? 'Copied!' : 'Click to copy' }}
                                     </span>
-                                </div>
-                                <p class="bg-40 rounded px-3 py-2 break-words select-text">
+                                </p>
+                                <p
+                                    v-copy="file.url"
+                                    v-copy:callback="copyCallback"
+                                    class="bg-40 rounded px-3 py-2 break-words cursor-pointer"
+                                >
                                     {{ file.url }}
                                 </p>
                             </div>
@@ -145,7 +142,7 @@
 </template>
 
 <script>
-import Preview from './FileDetailPreview'
+import Preview from './FilePreview'
 
 import { copy } from 'v-copy'
 
@@ -160,32 +157,23 @@ export default {
 
     data: () => ({
         loading: true,
+        justCopied: false,
     }),
 
-    mounted() {
-        Nova.request()
-            .post('/nova-vendor/nova-asset-manager/files/info', {
-                path: this.file.path,
-            })
-            .then(response => {
-                this.loading = false
-                this.file = response.data
-                //
-            })
-            .catch(error => {
-                console.log(error)
-                //
-            })
-    },
-
     methods: {
-        formatDate(date) {
-            return moment(date).format('ddd MMM D YYYY, h:mm A')
+        formatDate(timestamp) {
+            return moment.unix(timestamp).format('ddd MMM D YYYY, h:mm A')
         },
 
         handleClose() {
             this.$emit('close')
         },
+
+        copyCallback: _.throttle(function() {
+            console.log('copied')
+            this.justCopied = true
+            setTimeout(() => { this.justCopied = false }, 2000)
+        }, 2000, { trailing: false, }),
 
         handleDelete() {
             Nova.request()
@@ -203,7 +191,7 @@ export default {
                     }
                 })
                 .catch(error => {
-                    console.log(error)
+                    console.error(error)
                     //
                 })
         },

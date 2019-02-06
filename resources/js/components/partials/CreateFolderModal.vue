@@ -13,6 +13,7 @@
                         class="w-full form-control form-input form-input-bordered py-4"
                         placeholder="Folder name"
                         v-model.trim="folderName"
+                        @keyup.enter="handleCreate"
                         required
                     >
                     <p v-if="hasError" class="help-text text-danger mt-2">{{ errorMessage }}</p>

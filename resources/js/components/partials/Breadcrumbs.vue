@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center overflow-hidden mr-4">
+    <div class="flex items-center overflow-hidden mr-8">
         <span
             class="text-primary dim cursor-pointer"
             @click="navigateToHome('/')"
@@ -8,7 +8,7 @@
         </span>
         <span v-if="pathParts.length" class="text-60 mx-2">/</span>
 
-        <div class="rtl truncate text-80 text-right whitespace-no-wrap">
+        <div class="rtl text-80 text-right whitespace-no-wrap overflow-hidden">
             <template v-for="(part, index) in pathParts">
                 <span v-if="index == pathParts.length-1">{{ part }}</span>
 
@@ -62,5 +62,6 @@ export default {
 }
 .rtl {
     direction: rtl;
+    text-overflow: '\00A0…';
 }
 </style>

@@ -23,19 +23,19 @@
 
                 <template v-for="file in files">
 
-                    <Folder
-                        v-if="file.type == 'folder'"
+                    <GridItem
+                        v-if="view == 'grid'"
                         :key="file.id"
                         :file="file"
-                        :view="view"
                         @navigate="navigateToPath"
+                        @preview="preview"
                     />
 
-                    <File
-                        v-else
+                    <ListItem
+                        v-else-if="view == 'list'"
                         :key="file.id"
                         :file="file"
-                        :view="view"
+                        @navigate="navigateToPath"
                         @preview="preview"
                     />
 
@@ -48,8 +48,8 @@
 </template>
 
 <script>
-import File from './partials/File'
-import Folder from './partials/Folder'
+import GridItem from './partials/GridItem'
+import ListItem from './partials/ListItem'
 import Uploader from './Uploader'
 
 export default {
@@ -61,14 +61,14 @@ export default {
     },
 
     components: {
-        File,
-        Folder,
+        GridItem,
+        ListItem,
         Uploader,
     },
 
     methods: {
-        navigateToPath(path) {
-            this.$emit('navigate', path)
+        navigateToPath(file) {
+            this.$emit('navigate', file.path)
         },
 
         deleteFolder() {

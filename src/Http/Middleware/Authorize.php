@@ -2,21 +2,19 @@
 
 namespace Bakerkretzmar\AssetManager\Http\Middleware;
 
-use Closure;
-use Illuminate\Http\Request;
 use Bakerkretzmar\AssetManager\AssetManagerTool;
-use Symfony\Component\HttpFoundation\Response;
 
 class Authorize
 {
     /**
-     * @param Request $request
-     * @param Closure $next
+     * Handle the incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return \Illuminate\Http\Response
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle($request, $next)
     {
-        return app(AssetManagerTool::class)->authorize($request)
-        ? $next($request)
-        : abort(403);
+        return resolve(AssetManagerTool::class)->authorize($request) ? $next($request) : abort(403);
     }
 }

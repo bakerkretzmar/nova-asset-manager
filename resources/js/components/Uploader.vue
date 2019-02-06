@@ -52,8 +52,6 @@
 <script>
 import Progress from './partials/ProgressBar'
 
-import md5 from 'md5'
-
 export default {
     props: {
         path: String,
@@ -104,10 +102,7 @@ export default {
 
             Array.from(files).forEach(file => {
                 uploads.push({
-                    id: md5(file.name),
-                    type: file.type,
                     name: file.name,
-                    modified: file.lastModified,
                     size: file.size,
                     progress: 0,
                     error: false,

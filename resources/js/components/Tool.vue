@@ -16,6 +16,14 @@
                 </progress-button> -->
 
                 <button
+                    v-if="!inBaseFolder"
+                    class="btn btn-default btn-primary flex items-center mr-4 px-3"
+                    @click="back"
+                >
+                    <svg class="svg-shadow pb-px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M5.41 11H21a1 1 0 0 1 0 2H5.41l5.3 5.3a1 1 0 0 1-1.42 1.4l-7-7a1 1 0 0 1 0-1.4l7-7a1 1 0 0 1 1.42 1.4L5.4 11z"/></svg>
+                </button>
+
+                <button
                     class="btn btn-default btn-primary whitespace-no-wrap mr-4"
                     @click="openCreateFolderModal"
                 >
@@ -113,6 +121,10 @@ export default {
         if (urlParameters.has('path')) {
             this.path = urlParameters.get('path')
         }
+        if (urlParameters.has('view')) {
+            this.view = urlParameters.get('view')
+        }
+        this.updateURL()
         this.loadPath()
     },
 
@@ -135,17 +147,33 @@ export default {
 
         setListView() {
             this.view = 'list'
-            localStorage.setItem('cd_assetmanager_view_layout', 'list')
+            this.updateURL()
         },
         setGridView() {
             this.view = 'grid'
-            localStorage.setItem('cd_assetmanager_view_layout', 'grid')
+            this.updateURL()
         },
 
         navigateToPath(path) {
-            history.pushState(null, null, '?path=' + path)
             this.path = path
+            this.updateURL()
             this.reload()
+        },
+
+        updateURL() {
+            history.pushState(null, null, '?view=' + this.view + '&path=' + this.path)
+        },
+
+        back() {
+            if (this.path.lastIndexOf('/') == -1) {
+                return this.navigateToPath('/')
+            }
+
+            if (this.path.endsWith('/')) {
+                this.path = this.path.substring(this.path.length - 1)
+            }
+
+            this.navigateToPath(this.path.substring(0, this.path.lastIndexOf('/')))
         },
 
         reload() {
@@ -156,12 +184,13 @@ export default {
 
         loadPath() {
             Nova.request()
-                .get('/nova-vendor/nova-asset-manager', {
+                .get('/nova-vendor/nova-asset-manager/folders/info', {
                     params: {
                         path: this.path,
                     },
                 })
                 .then(response => {
+                    // console.log(response.data)
                     this.files = response.data.files
                     this.loading = false
                 })
@@ -175,6 +204,12 @@ export default {
             // Make this a watch on the 'query' property and just debounce that...
             this.query = e.target.value
         }, 300),
+    },
+
+    computed: {
+        inBaseFolder() {
+            return this.path == '/' || ''
+        },
     },
 }
 </script>
@@ -192,5 +227,8 @@ export default {
         -webkit-transform: rotate(359deg);
         transform: rotate(359deg);
     }
+}
+.svg-shadow {
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,.2));
 }
 </style>
