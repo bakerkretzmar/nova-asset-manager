@@ -29,7 +29,7 @@
 
             <!-- <create-folder ref="createFolderModal" :active="showCreateFolder" :current="currentPath" v-on:closeCreateFolderModal="closeModalCreateFolder" v-on:refresh="refreshCurrent" /> -->
 
-            <UploadProgress ref="uploader" :current="currentPath" v-on:removeFile="removeFileFromUpload"></UploadProgress>
+            <!-- <UploadProgress ref="uploader" :current="currentPath" v-on:removeFile="removeFileFromUpload"></UploadProgress> -->
 
             <file-select :id="field.name" :field="field" :css="errorClasses"  v-model="value" v-on:open-modal="openFilemanagerModal"></file-select>
 
@@ -66,7 +66,7 @@ import FileSelect from './custom/FileSelect';
 // import ModalFileManager from '../components/ModalFileManager';
 // import CreateFolderModal from '../components/CreateFolderModal';
 // import DetailPopup from '../components/DetailPopup';
-import UploadProgress from '../components/UploadProgress';
+// import UploadProgress from '../components/UploadProgress';
 // import ConfirmModalRemoveFile from '../components/ConfirmModalRemoveFile';
 
 export default {
@@ -79,7 +79,7 @@ export default {
         // 'modal-filemanager': ModalFileManager,
         // 'create-folder': CreateFolderModal,
         // DetailPopup: DetailPopup,
-        UploadProgress: UploadProgress,
+        // UploadProgress: UploadProgress,
         // 'confirm-modal-remove-file': ConfirmModalRemoveFile,
     },
 

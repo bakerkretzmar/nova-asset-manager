@@ -7,15 +7,12 @@
             <div v-if="loading" class="flex items-center justify-center absolute pin z-50 bg-white"><loader class="text-60" /></div>
 
             <file-icon
-                v-if="showIcon"
-                :type="file.mime"
+                v-if="icon"
+                :type="file.type"
                 class="block w-1/3 m-auto"
             />
 
-            <div
-                v-show="!showIcon && !loading"
-                class="image-preview-grid overflow-hidden"
-            >
+            <div v-else class="image-preview-grid overflow-hidden">
                 <img :src="src" ref="image">
             </div>
 
@@ -29,7 +26,7 @@
         <div @click="preview" class="relative flex h-12 border-2 border-50 rounded text-70 hover:text-primary shadow cursor-pointer overflow-hidden">
 
             <file-icon
-                :type="file.mime"
+                :type="file.type"
                 class="block h-4/5 w-12 ml-2 mr-6 my-auto"
             />
 
@@ -37,12 +34,12 @@
                 {{ file.name }}
             </div>
 
-            <div class="text-black text-sm w-1/6 p-1 my-auto truncate" :title="file.size_human">
-                {{ file.size_human }}
+            <div class="text-black text-sm w-1/6 p-1 my-auto truncate" :title="file.size_string">
+                {{ file.size_string }}
             </div>
 
-            <div class="text-black text-sm w-1/5 p-1 my-auto truncate" :title="file.last_modification">
-                {{ file.last_modification }}
+            <div class="text-black text-sm w-1/5 py-1 px-2 my-auto truncate" :title="file.modified">
+                {{ file.modified }}
             </div>
 
         </div>
@@ -62,22 +59,21 @@ export default {
     },
 
     data: () => ({
+        icon: true,
         loading: true,
-        showIcon: false,
         src: '',
     }),
 
-    mounted() {
-        if (this.file.mime != 'image') {
-            this.showIcon = true
-            this.loading = false
-            return
+    created() {
+        if (this.file.type != 'image') {
+            return this.loading = false
         }
 
         Minimum(
-            Nova.request().get(this.file.asset, {
-                responseType: 'blob',
-            })
+            Nova.request()
+                .get(this.file.url, {
+                    responseType: 'blob',
+                })
         )
         .then(({ headers, data }) => {
             let blob = new Blob([data], {
@@ -86,11 +82,11 @@ export default {
 
             this.src = URL.createObjectURL(blob)
 
+            this.icon = false
             this.loading = false
         })
         .catch(error => {
             console.log(error)
-            this.showIcon = true
             this.loading = false
         })
     },

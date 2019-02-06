@@ -1,50 +1,48 @@
 <template>
-    <portal to="modals">
-        <transition name="fade">
+    <transition name="fade">
 
-            <modal @modal-close="handleClose">
+        <modal @modal-close="handleClose">
 
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden w-540">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden w-540">
 
-                    <div class="p-8">
-                        <heading :level="2" class="mb-6">Create folder</heading>
-                        <input
-                            ref="folderNameInput"
-                            type="text"
-                            class="w-full form-control form-input form-input-bordered py-4"
-                            placeholder="Folder name"
-                            v-model.trim="folderName"
-                            required
-                        >
-                        <p v-if="hasError" class="help-text text-danger mt-2">{{ errorMessage }}</p>
-                    </div>
-
-                    <div class="bg-30 px-6 py-3 flex">
-                        <div class="ml-auto">
-                            <button type="button" ref="cancelButton" @click.prevent="handleClose" class="btn text-80 font-normal h-9 px-3 mr-3 btn-link">Cancel</button>
-                            <progress-button
-                                class="btn btn-default btn-primary"
-                                @click.native="handleCreate"
-                                :disabled="isSaving || ! folderName.length"
-                                :processing="isSaving"
-                            >
-                                Create
-                            </progress-button>
-                        </div>
-                    </div>
-
+                <div class="p-8">
+                    <heading :level="2" class="mb-6">Create folder</heading>
+                    <input
+                        ref="folderNameInput"
+                        type="text"
+                        class="w-full form-control form-input form-input-bordered py-4"
+                        placeholder="Folder name"
+                        v-model.trim="folderName"
+                        required
+                    >
+                    <p v-if="hasError" class="help-text text-danger mt-2">{{ errorMessage }}</p>
                 </div>
 
-            </modal>
+                <div class="bg-30 px-6 py-3 flex">
+                    <div class="ml-auto">
+                        <button type="button" ref="cancelButton" @click.prevent="handleClose" class="btn text-80 font-normal h-9 px-3 mr-3 btn-link">Cancel</button>
+                        <progress-button
+                            class="btn btn-default btn-primary"
+                            @click.native="handleCreate"
+                            :disabled="isSaving || ! folderName.length"
+                            :processing="isSaving"
+                        >
+                            Create
+                        </progress-button>
+                    </div>
+                </div>
 
-        </transition>
-    </portal>
+            </div>
+
+        </modal>
+
+    </transition>
 </template>
 
 <script>
 export default {
     props: {
-        fullPath: String,
+        path: String,
     },
 
     data: () => ({
@@ -67,7 +65,7 @@ export default {
             Nova.request()
                 .post('/nova-vendor/nova-asset-manager/folders/create', {
                     folder: this.folderName,
-                    path: this.fullPath,
+                    path: this.path,
                 })
                 .then(result => {
                     switch (result.data) {

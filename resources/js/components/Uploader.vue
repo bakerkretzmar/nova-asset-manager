@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import Progress from './partials/UploadProgress'
+import Progress from './partials/ProgressBar'
 
 import md5 from 'md5'
 

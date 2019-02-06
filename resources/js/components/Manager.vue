@@ -1,84 +1,50 @@
 <template>
-    <div ref="manager">
-        <div class="flex items-center w-full mt-4 mb-3">
-            <div
-                class="text-primary dim cursor-pointer"
-                @click="navigateToPath('/')"
-            >
-                Home
-            </div>
+    <transition name="fade">
+        <div class="relative min-h-loader">
+            <div v-if="loading" class="flex items-center justify-center absolute pin z-50 h-loader bg-white"><loader class="text-60" /></div>
 
-            <template v-for="(folder, index) in path">
-                <div class="text-60 mx-2">/</div>
+            <Uploader :path="path" @reload="reload" />
 
-                <template v-if="Object.keys(path).length -1 == index">
-                    <div class="text-black">{{ folder.name }}</div>
-                </template>
+            <div class="flex flex-wrap -mx-1">
 
-                <template v-else>
-                    <div
-                        class="text-primary dim cursor-pointer"
-                        @click="navigateToPath(folder.path)"
+                <!-- <template v-if="files.error">
+                    <p class="text-center text-danger w-full my-8">Sorry, you don’t have permission to view this folder.</p>
+                </template> -->
+
+                <div v-if="!loading && files.length == 0" class="mx-auto">
+                    <p class="text-center text-80 italic mt-8 mb-4">Nothing to see here!</p>
+                    <button
+                        class="btn btn-default btn-danger"
+                        @click="deleteFolder"
                     >
-                        {{ folder.name }}
-                    </div>
-                </template>
-            </template>
-        </div>
-
-        <transition name="fade">
-            <div class="relative min-h-loader">
-                <div v-if="loading" class="flex items-center justify-center absolute pin z-50 h-loader bg-white"><loader class="text-60" /></div>
-
-                <Uploader
-                    :path="fullPath"
-                    @reload="reload"
-                />
-
-                <div class="flex flex-wrap -mx-1">
-
-                    <template v-if="files.error">
-                        <p class="text-center text-danger w-full my-8">Sorry, you don’t have permission to view this folder.</p>
-                    </template>
-
-                    <template v-if="!loading && files.length == 0">
-                        <div class="mx-auto">
-                            <p class="text-center text-black my-6">This folder is empty.</p>
-                            <button
-                                @click="deleteFolder"
-                                class="btn btn-default btn-danger"
-                            >
-                                Delete folder
-                            </button>
-                        </div>
-                    </template>
-
-                    <template v-if="!files.error" v-for="(file, index) in files">
-
-                        <Folder
-                            :key="file.id"
-                            v-if="file.type == 'dir'"
-                            :file="file"
-                            :view="view"
-                            @navigate="navigateToPath"
-                        />
-
-                        <File
-                            :key="file.id"
-                            v-if="file.type == 'file'"
-                            :file="file"
-                            :view="view"
-                            @preview="preview"
-                        />
-
-                    </template>
-
+                        Delete folder
+                    </button>
                 </div>
 
+                <template v-for="file in files">
+
+                    <Folder
+                        v-if="file.type == 'folder'"
+                        :key="file.id"
+                        :file="file"
+                        :view="view"
+                        @navigate="navigateToPath"
+                    />
+
+                    <File
+                        v-else
+                        :key="file.id"
+                        :file="file"
+                        :view="view"
+                        @preview="preview"
+                    />
+
+                </template>
+
             </div>
 
-        </transition>
-    </div>
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -89,9 +55,8 @@ import Uploader from './Uploader'
 export default {
     props: {
         files: Array,
-        path: Array,
-        fullPath: String,
         loading: Boolean,
+        path: String,
         view: String,
     },
 
@@ -103,22 +68,23 @@ export default {
 
     methods: {
         navigateToPath(path) {
-            this.$emit('navigateToPath', path)
+            this.$emit('navigate', path)
         },
 
         deleteFolder() {
             Nova.request()
-                .post('/nova-vendor/nova-asset-manager/folders/delete', { path: this.fullPath })
+                .post('/nova-vendor/nova-asset-manager/folders/delete', { path: this.path })
                 .then(response => {
                     if (response.data == true) {
                         this.$toasted.show('Folder deleted!', { type: 'success' })
-                        this.$emit('navigateToPath', '/')
+                        this.$emit('navigate', '/')
                     } else {
+                        console.error(response)
                         this.$toasted.show('Error deleting folder. Please check permissions.', { type: 'error' })
                     }
                 })
                 .catch(error => {
-                    console.log(error)
+                    console.error(error)
                 })
         },
 

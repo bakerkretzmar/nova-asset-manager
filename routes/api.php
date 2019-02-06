@@ -1,12 +1,14 @@
 <?php
 
 use Bakerkretzmar\AssetManager\Http\Controllers\AssetManagerToolController;
-use Bakerkretzmar\AssetManager\Http\Controllers\FolderController;
+use Bakerkretzmar\AssetManager\Http\Controllers\InfoController;
 use Bakerkretzmar\AssetManager\Http\Controllers\FileController;
+use Bakerkretzmar\AssetManager\Http\Controllers\FolderController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', InfoController::class);
 Route::get('data', [AssetManagerToolController::class, 'getData']);
 
 Route::prefix('folders')->group(function () {
