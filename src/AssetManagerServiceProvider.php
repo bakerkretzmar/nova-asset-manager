@@ -19,8 +19,7 @@ class AssetManagerServiceProvider extends ServiceProvider
         });
 
         Nova::serving(function (ServingNova $event) {
-            // Nova::script('asset-manager-field', __DIR__.'/../dist/js/field.js');
-            // Nova::style('filemanager-field', __DIR__.'/../dist/css/field.css');
+            Nova::script('asset-manager-field', __DIR__.'/../dist/js/field.js');
         });
     }
 
@@ -33,10 +32,5 @@ class AssetManagerServiceProvider extends ServiceProvider
         Route::middleware(['nova', Authorize::class])
             ->prefix('nova-vendor/nova-asset-manager')
             ->group(__DIR__.'/../routes/api.php');
-    }
-
-    public function register()
-    {
-        //
     }
 }

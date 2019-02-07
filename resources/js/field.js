@@ -1,5 +1,5 @@
-Nova.booting(Vue => {
-    Vue.component('index-filemanager-field', require('./field/IndexField'));
-    Vue.component('detail-filemanager-field', require('./field/DetailField'));
-    Vue.component('form-filemanager-field', require('./field/FormField'));
-});
+Nova.booting((Vue, router) => {
+    // Vue.component('index-asset-manager-field', require('./components/IndexField'))
+    Vue.component('detail-asset-manager-field', require('./components/DetailField'))
+    Vue.component('form-asset-manager-field', require('./components/FormField'))
+})

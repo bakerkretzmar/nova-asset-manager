@@ -10,6 +10,7 @@ class AssetManagerTool extends Tool
     public function boot()
     {
         Nova::script('nova-asset-manager', __DIR__.'/../dist/js/tool.js');
+        Nova::style('nova-asset-manager', __DIR__.'/../dist/css/tool.css');
     }
 
     public function renderNavigation()

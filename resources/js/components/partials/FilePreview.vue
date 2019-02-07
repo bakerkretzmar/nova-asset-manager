@@ -1,5 +1,5 @@
 <template>
-    <div class="relative object-cover w-full">
+    <div class="relative w-full h-full">
         <div v-if="loading" class="flex items-center justify-center absolute pin z-50 bg-white"><loader class="text-60" /></div>
 
         <file-icon
@@ -8,7 +8,7 @@
             class="block w-1/3 m-auto"
         />
 
-        <img v-else :src="src" />
+        <img v-else class="object-cover w-full h-full" :src="src" />
     </div>
 </template>
 

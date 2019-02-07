@@ -1,12 +1,7 @@
 {
     "name": "bakerkretzmar/nova-asset-manager",
     "description": "A Laravel Nova tool and field to manage files and images.",
-    "keywords": [
-        "laravel",
-        "nova",
-        "assets",
-        "asset manager"
-    ],
+    "keywords": ["laravel", "nova", "asset", "file", "manager"],
     "homepage": "https://github.com/bakerkretzmar/nova-asset-manager",
     "license": "MIT",
     "authors": [

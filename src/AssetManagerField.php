@@ -3,26 +3,40 @@
 namespace Bakerkretzmar\AssetManager;
 
 use Laravel\Nova\Fields\Field;
-use Bakerkretzmar\AssetManager\Http\Services\AssetManagerService;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class AssetManagerField extends Field
 {
-    /**
-     * The field's component.
-     *
-     * @var string
-     */
     public $component = 'asset-manager-field';
+
+    public $showOnIndex = false;
+
+    public function filetypes(array $types)
+    {
+        return $this->withMeta(['filetypes' => $types]);
+    }
+
+    public function folder(string $dir)
+    {
+        return $this->withMeta(['folder' => $dir]);
+    }
+
+    public function maximum(int $max)
+    {
+        return $this->withMeta(['maximum' => $max]);
+    }
+
+
 
     /**
      * Set display in details and list as image or icon.
      *
      * @return $this
      */
-    public function displayAsImage()
-    {
-        return $this->withMeta(['display' => 'image']);
-    }
+    // public function displayAsImage()
+    // {
+    //     return $this->withMeta(['display' => 'image']);
+    // }
 
     /**
      * Set current folder for the field.
@@ -31,42 +45,42 @@ class AssetManagerField extends Field
      *
      * @return  $this
      */
-    public function folder($folderName)
-    {
-        return $this->withMeta(['folder' => $folderName]);
-    }
+    // public function folder($folderName)
+    // {
+    //     return $this->withMeta(['folder' => $folderName]);
+    // }
 
     /**
      * Resolve the thumbnail URL for the field.
      *
      * @return string|null
      */
-    public function resolveInfo()
-    {
-        if ($this->value) {
-            $service = new AssetManagerService();
+    // public function resolveInfo()
+    // {
+    //     if ($this->value) {
+    //         $service = new AssetManagerService();
 
-            $data = $service->getFileInfoAsArray($this->value);
+    //         $data = $service->getFileInfoAsArray($this->value);
 
-            if (empty($data)) {
-                return [];
-            }
+    //         if (empty($data)) {
+    //             return [];
+    //         }
 
-            return $this->fixNameLabel($data);
-        }
+    //         return $this->fixNameLabel($data);
+    //     }
 
-        return [];
-    }
+    //     return [];
+    // }
 
     /**
      * Get additional meta information to merge with the element payload.
      *
      * @return array
      */
-    public function meta()
-    {
-        return array_merge($this->resolveInfo(), $this->meta);
-    }
+    // public function meta()
+    // {
+    //     return array_merge($this->resolveInfo(), $this->meta);
+    // }
 
     /**
      * FIx name label.
@@ -75,11 +89,19 @@ class AssetManagerField extends Field
      *
      * @return array
      */
-    private function fixNameLabel(array $data): array
-    {
-        $data['filename'] = $data['name'];
-        unset($data['name']);
+    // private function fixNameLabel(array $data): array
+    // {
+    //     $data['filename'] = $data['name'];
+    //     unset($data['name']);
 
-        return $data;
+    //     return $data;
+    // }
+
+    protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)
+    {
+        if ($request->exists($requestAttribute)) {
+            $model->{$attribute} = json_decode($request[$requestAttribute], true);
+        }
+
     }
 }

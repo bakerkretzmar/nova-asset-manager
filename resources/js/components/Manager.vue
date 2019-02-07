@@ -14,6 +14,7 @@
                 <div v-if="!loading && files.length == 0" class="mx-auto">
                     <p class="text-center text-80 italic mt-8 mb-4">Nothing to see here!</p>
                     <button
+                        v-if="context == 'tool'"
                         class="btn btn-default btn-danger"
                         @click="deleteFolder"
                     >
@@ -58,6 +59,7 @@ export default {
         loading: Boolean,
         path: String,
         view: String,
+        context: String,
     },
 
     components: {

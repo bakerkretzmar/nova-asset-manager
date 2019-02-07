@@ -2,4 +2,3 @@
 /vendor
 composer.lock
 npm-debug.log
-package-lock.json

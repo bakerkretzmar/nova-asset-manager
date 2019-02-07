@@ -10,4 +10,4 @@ Nova.booting((Vue, router) => {
     ])
 
     Vue.component('file-icon', require('./components/icons/Icon'))
-});
+})

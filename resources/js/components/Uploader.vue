@@ -1,5 +1,5 @@
 <template>
-    <div ref="uploader" class="uploader flex flex-col justify-center mb-3 py-2 px-3 rounded-lg" :class="{ 'active' : dragActive }">
+    <div ref="uploader" class="uploader flex flex-col justify-center mb-4 py-2 px-3 rounded-lg" :class="{ 'active' : dragActive }">
         <div
             v-if="!files.length"
             class="mx-auto text-center text-primary font-bold italic"

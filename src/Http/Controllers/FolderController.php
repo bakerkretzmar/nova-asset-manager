@@ -15,15 +15,13 @@ class FolderController extends AssetManagerController
      */
     public function show(Request $request)
     {
-        $path = $request->path;
-
-        if (! $this->storage->exists($path)) {
-            $path = '/';
-        }
-
-        $files = collect($this->storage->listContents($path));
+        $files = collect($this->storage->listContents($this->path));
 
         $this->enrich($files);
+
+        if ($request->has('mimes')) {
+            $files = $this->filterMimes($files, $request->mimes);
+        }
 
         $files = $this->sort($files);
 
@@ -94,7 +92,8 @@ class FolderController extends AssetManagerController
     /**
      * Sort files by type then by name, with folders first.
      */
-    protected function sort($files) {
+    protected function sort($files)
+    {
         $folders = $files->where('type', 'dir')->sortBy('basename')->values();
 
         $items = $files->where('type', 'file')->sortBy(function ($item) {
@@ -102,6 +101,16 @@ class FolderController extends AssetManagerController
         })->values();
 
         return $folders->merge($items);
+    }
+
+    /**
+     * Filter files, returning only those with one of the given mime types.
+     */
+    protected function filterMimes($files, $mimes)
+    {
+        return $files->filter(function ($value, $key) use ($mimes) {
+            return in_array($value['mime'], $mimes);
+        });
     }
 
     /**

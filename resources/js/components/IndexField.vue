@@ -1,6 +1,6 @@
 <template>
     <div>
-        <template v-if="display == 'normal'">
+      <!--   <template v-if="display == 'normal'">
             <span >{{ field.value }}</span>
         </template>
         <template v-else>
@@ -13,22 +13,21 @@
             <template v-else>
                 <span class="pl-2">&mdash;</span>
             </template>
-			
-    		
-        </template>
+
+
+        </template> -->
     </div>
- 
 </template>
 
 <script>
 export default {
     props: ['resourceName', 'field'],
-    data: () => ({
-        display: 'normal',
-    }),
-    mounted() {
-        this.display = this.field.display || 'normal';
-    },
+    // data: () => ({
+    //     display: 'normal',
+    // }),
+    // mounted() {
+    //     this.display = this.field.display || 'normal';
+    // },
 };
 </script>
 

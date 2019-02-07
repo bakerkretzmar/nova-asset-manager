@@ -114,24 +114,25 @@
                 </div>
 
                 <div class="bg-30 px-6 py-3 flex">
-                    <div class="ml-auto">
+                    <transition name="fade">
                         <button
+                            v-if="deleting"
                             type="button"
-                            ref="deleteButton"
-                            class="btn text-80 hover:text-danger font-normal h-9 px-1 mr-3 btn-link"
+                            class="btn btn-default btn-danger ml-auto mr-3"
+                            @click.prevent="handleConfirmDelete"
+                        >
+                            Confirm delete?
+                        </button>
+                        <button
+                            v-else
+                            type="button"
+                            class="btn btn-link text-80 hover:text-danger font-normal h-9 px-1 ml-auto mr-3"
                             @click.prevent="handleDelete"
                         >
                             Delete
                         </button>
-                        <progress-button
-                            class="btn btn-default btn-primary"
-                        >
-                            <!-- @click.native="handleCreate"
-                            :disabled="isSaving || ! folderName.length"
-                            :processing="isSaving" -->
-                            Edit
-                        </progress-button>
-                    </div>
+                    </transition>
+                    <a class="btn btn-default btn-primary" :href="file.url" download>Download</a>
                 </div>
 
             </div>
@@ -156,6 +157,7 @@ export default {
     directives: { copy },
 
     data: () => ({
+        deleting: false,
         loading: true,
         justCopied: false,
     }),
@@ -170,18 +172,22 @@ export default {
         },
 
         copyCallback: _.throttle(function() {
-            console.log('copied')
             this.justCopied = true
-            setTimeout(() => { this.justCopied = false }, 2000)
+            setTimeout(() => { this.justCopied = false }, 3000)
         }, 2000, { trailing: false, }),
 
         handleDelete() {
+            this.deleting = true
+            setTimeout(() => { this.deleting = false }, 3000)
+        },
+
+        handleConfirmDelete() {
             Nova.request()
                 .post('/nova-vendor/nova-asset-manager/files/delete', {
                     path: this.file.path,
                 })
                 .then(response => {
-                    if (response.data == 'sucess') {
+                    if (response.data == 'success') {
                         this.handleClose()
                         this.$toasted.show('File deleted!', { type: 'success' })
                         this.$emit('reload')

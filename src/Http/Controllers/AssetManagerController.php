@@ -2,16 +2,19 @@
 
 namespace Bakerkretzmar\AssetManager\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
 
 class AssetManagerController extends Controller
 {
-    /** @var \Illuminate\Support\Facades\Storage */
+    protected $path;
+
     protected $storage;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
+        $this->path = $request->path;
         $this->storage = Storage::disk('assets');
     }
 }
