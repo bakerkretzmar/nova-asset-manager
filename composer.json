@@ -11,13 +11,15 @@
             "role": "Developer"
         }
     ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
+        }
+    ],
     "require": {
         "php": ">=7.1.0",
         "laravel/nova": "*"
-    },
-    "require-dev": {
-        "orchestra/testbench": "^3.6",
-        "phpunit/phpunit": "7.1"
     },
     "autoload": {
         "psr-4": {
