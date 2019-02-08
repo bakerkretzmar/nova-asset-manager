@@ -133,6 +133,41 @@ class FolderController extends AssetManagerController
     {
         $mime = $this->storage->mimeType($path);
 
+        $word = [
+            'application/msword',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.template',
+            'application/vnd.ms-word.document.macroEnabled.12',
+            'application/vnd.ms-word.template.macroEnabled.12',
+        ];
+
+        $excel = [
+            'application/vnd.ms-excel',
+            'application/vnd.ms-excel',
+            'application/vnd.ms-excel',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.template',
+            'application/vnd.ms-excel.sheet.macroEnabled.12',
+            'application/vnd.ms-excel.template.macroEnabled.12',
+            'application/vnd.ms-excel.addin.macroEnabled.12',
+            'application/vnd.ms-excel.sheet.binary.macroEnabled.12',
+        ];
+
+        $powerpoint = [
+            'application/vnd.ms-powerpoint',
+            'application/vnd.ms-powerpoint',
+            'application/vnd.ms-powerpoint',
+            'application/vnd.ms-powerpoint',
+            'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+            'application/vnd.openxmlformats-officedocument.presentationml.template',
+            'application/vnd.openxmlformats-officedocument.presentationml.slideshow',
+            'application/vnd.ms-powerpoint.addin.macroEnabled.12',
+            'application/vnd.ms-powerpoint.presentation.macroEnabled.12',
+            'application/vnd.ms-powerpoint.template.macroEnabled.12',
+            'application/vnd.ms-powerpoint.slideshow.macroEnabled.12',
+        ];
+
         switch($mime) {
             case 'directory':
                 return 'folder';
@@ -155,14 +190,14 @@ class FolderController extends AssetManagerController
             case Str::startsWith($mime, 'text'):
                 return 'text';
 
-            case 'application/msword':
-                return 'word';
+            case in_array($mime, $word):
+                return 'doc-word';
 
-            case 'application/vnd.ms-excel':
-                return 'excel';
+            case in_array($mime, $excel):
+                return 'doc-excel';
 
-            case 'application/vnd.ms-powerpoint':
-                return 'powerpoint';
+            case in_array($mime, $powerpoint):
+                return 'doc-powerpoint';
 
             default:
                 return 'file';

@@ -24,19 +24,19 @@ export default {
         'generic-file': File,
         'archive-file': FileArchive,
         'audio-file': FileAudio,
-        'excel-file': FileExcel,
+        'doc-excel-file': FileExcel,
         'folder-file': FileFolder,
         'image-file': FileImage,
         'pdf-file': FilePdf,
-        'powerpoint-file': FilePowerpoint,
+        'doc-powerpoint-file': FilePowerpoint,
         'text-file': FileText,
         'video-file': FileVideo,
-        'word-file': FileWord,
+        'doc-word-file': FileWord,
     },
 
     computed: {
         computedType() {
-            if (['archive', 'audio', 'excel', 'folder', 'image', 'pdf', 'powerpoint', 'text', 'video', 'word'].includes(this.type)) {
+            if (['archive', 'audio', 'doc-excel', 'folder', 'image', 'pdf', 'doc-powerpoint', 'text', 'video', 'doc-word'].includes(this.type)) {
                 return `${this.type}-file`
             }
             return 'generic-file'

@@ -37,20 +37,13 @@
 
                             <template v-else-if="file.mime == 'video'">
                                 <video controls crossorigin playsinline>
-                                    <source :src="file.url" :type="file.mime" />
+                                    <source :src="file.url" />
                                 </video>
                             </template>
 
-                            <!-- <template v-else-if="file.mime == 'pdf'">
-                                <iframe :src="file.url" width="400px" height="400px"></iframe>
-                                <object :data="file.url" type="application/pdf" width="100%" height="100%">
-                                    <iframe :src="file.url" width="100%" height="100%" style="border: none;">
-                                        <object class="no-preview" v-html="file.image">
-
-                                        </object>
-                                    </iframe>
-                                </object>
-                            </template> -->
+                            <template v-else-if="file.mime == 'pdf'">
+                                <iframe :src="file.url"></iframe>
+                            </template>
 
                             <template v-else>
                                 <file-icon
@@ -74,7 +67,7 @@
                             </div> -->
 
                             <div v-if="file.timestamp" class="flex flex-col mb-6">
-                                <p class="text-80 font-bold mb-2">Last modified</p>
+                                <p class="text-80 font-bold mb-2">Modified</p>
                                 <div class="bg-40 rounded px-3 py-2 break-words select-text">{{ formatDate(file.timestamp) }}</div>
                             </div>
 
@@ -213,5 +206,10 @@ export default {
 .clipboard-icon {
     height: 20px;
     width: 20px;
+}
+iframe {
+    min-height: 65vh;
+    height: 100%;
+    width: 100%;
 }
 </style>

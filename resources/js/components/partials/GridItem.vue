@@ -51,16 +51,16 @@ export default {
 <style scoped>
 .griditem {
     width: 20%;
-    padding-right: .25rem;
-    padding-bottom: .5rem;
-    padding-left: .25rem;
+    padding-right: .375rem;
+    padding-bottom: .75rem;
+    padding-left: .375rem;
 }
 @media only screen and (min-width: 1600px) {
     .griditem {
         width: 16.6667%;
-        padding-right: .5rem;
-        padding-bottom: 1rem;
-        padding-left: .5rem;
+        padding-right: .75rem;
+        padding-bottom: 1.5rem;
+        padding-left: .75rem;
     }
 }
 .h-4\/5 {

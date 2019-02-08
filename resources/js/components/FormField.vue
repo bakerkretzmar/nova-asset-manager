@@ -5,10 +5,13 @@
             <div class="flex flex-wrap">
 
                 <FormGridItem
-                    v-for="file in value"
+                    v-for="(file, index) in value"
                     :key="file.id"
                     :file="file"
+                    :index="index"
+                    :length="value.length"
                     @remove="remove(file.id)"
+                    @move="reorder($event, index)"
                 />
 
             </div>
@@ -18,7 +21,7 @@
                 :class="{ 'cursor-not-allowed opacity-50': hasMaximum }"
                 @click.prevent="handleOpen"
             >
-                Add files
+                Add {{ field.name.toLowerCase() }}
             </button>
 
             <portal to="modals">
@@ -175,6 +178,11 @@ export default {
             this.value = this.value.filter(item => {
                 return item.id != id
             })
+        },
+
+        reorder(distance, from) {
+            let to = from + distance
+            this.value.splice(to, 0, this.value.splice(from, 1)[0])
         },
 
         setInitialValue() {
