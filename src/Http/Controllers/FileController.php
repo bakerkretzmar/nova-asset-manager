@@ -2,27 +2,10 @@
 
 namespace Bakerkretzmar\AssetManager\Http\Controllers;
 
-use Bakerkretzmar\AssetManager\Http\Services\NormalizeFile;
-
 use Illuminate\Http\Request;
 
 class FileController extends AssetManagerController
 {
-    /**
-     * Get detailed information about a given file.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Request $request)
-    {
-        $fullPath = $this->storage->path($request->path);
-
-        $info = new NormalizeFile($this->storage, $fullPath, $request->path);
-
-        return response()->json($info->toArray());
-    }
-
     /**
      * Upload a file at the given path.
      *

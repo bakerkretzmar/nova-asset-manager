@@ -12,7 +12,6 @@ Route::prefix('folders')->group(function () {
 });
 
 Route::prefix('files')->group(function () {
-    Route::get('info', [FileController::class, 'show']);
     Route::post('upload', [FileController::class, 'create']);
     Route::post('delete', [FileController::class, 'destroy']);
 });
