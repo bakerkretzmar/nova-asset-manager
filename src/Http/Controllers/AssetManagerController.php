@@ -15,6 +15,7 @@ class AssetManagerController extends Controller
     public function __construct(Request $request)
     {
         $this->path = $request->path;
-        $this->storage = Storage::disk('assets');
+
+        $this->storage = Storage::disk(config('filesystems.asset_manager_disk', 'assets'));
     }
 }
