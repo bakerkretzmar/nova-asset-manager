@@ -1,5 +1,5 @@
 <template>
-    <div class="relative w-full h-full">
+    <div :class="{ 'relative w-full h-full' : !icon }">
         <div v-if="loading" class="flex items-center justify-center absolute pin z-50 bg-white"><loader class="text-60" /></div>
 
         <file-icon
