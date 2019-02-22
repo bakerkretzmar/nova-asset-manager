@@ -111,7 +111,7 @@ export default {
                 })
             })
 
-            this.files = uploads
+            this.files.push(...uploads)
             uploads.forEach(file => this.upload(file))
         },
 
@@ -158,12 +158,10 @@ export default {
         },
 
         forget(file) {
+            this.$emit('reload')
             setTimeout(() => {
-                this.files = this.files.filter(f => f.id !== file.id)
-                if (!this.files.length && this.successfulUploads) {
-                    this.$emit('reload')
-                }
-            }, 5000)
+                this.files = this.files.filter(f => f.name != file.name)
+            }, 2000)
         },
     },
 };
