@@ -1,6 +1,8 @@
 <template>
     <div class="griditem" @click="handleClick">
-        <div class="flex flex-col h-40 rounded-lg border-2 border-50 text-70 hover:text-primary shadow cursor-pointer overflow-hidden">
+        <div class="flex flex-col h-40 rounded-lg border-2 border-50 text-70 hover:text-primary shadow cursor-pointer overflow-hidden relative">
+
+            <div v-if="context == 'field'" class="absolute pin opacity z-20 flex items-center justify-center text-lg text-white font-bold">Click to add</div>
 
             <file-icon
                 v-if="file.mime == 'folder'"
@@ -34,7 +36,8 @@ import Preview from './FilePreview'
 
 export default {
     props: {
-        file: Object
+        file: Object,
+        context: String,
     },
 
     components: { Preview },
@@ -77,5 +80,14 @@ export default {
 }
 .hover\:text-primary {
     transition: color .1s;
+}
+
+.opacity {
+    opacity: 0;
+    transition: all .1s;
+}
+.opacity:hover {
+    opacity: 1;
+    background: linear-gradient(rgba(80,80,80,.5), rgba(0,0,0,.5));
 }
 </style>

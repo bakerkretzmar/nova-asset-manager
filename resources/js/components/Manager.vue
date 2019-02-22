@@ -26,6 +26,7 @@
 
                     <GridItem
                         v-if="view == 'grid'"
+                        :context="context"
                         :key="file.id"
                         :file="file"
                         @navigate="navigateToPath"
@@ -34,6 +35,7 @@
 
                     <ListItem
                         v-else-if="view == 'list'"
+                        :context="context"
                         :key="file.id"
                         :file="file"
                         @navigate="navigateToPath"

@@ -1,6 +1,6 @@
 <template>
     <div class="listitem w-full p-1 border-b-2 border-50" @click="handleClick">
-        <div class="flex h-12 text-70 hover:text-primary cursor-pointer overflow-hidden">
+        <div class="flex h-12 text-70 hover:text-primary cursor-pointer overflow-hidden opacity">
 
             <file-icon
                 :type="file.mime"
@@ -15,8 +15,12 @@
                 {{ file.size_string }}
             </div>
 
-            <div class="w-1/4 py-1 my-auto text-80 truncate" :title="formatDate(file.timestamp)">
+            <div class="w-48 py-1 my-auto text-80 truncate" :title="formatDate(file.timestamp)">
                 {{ formatDate(file.timestamp) }}
+            </div>
+
+            <div v-if="context == 'field'" class="py-1 my-auto ml-8 text-90 font-bold click-to-add">
+                Click to add
             </div>
 
         </div>
@@ -26,7 +30,8 @@
 <script>
 export default {
     props: {
-        file: Object
+        file: Object,
+        context: String,
     },
 
     methods: {
@@ -54,5 +59,13 @@ export default {
 }
 .listitem:last-child {
     border-bottom: none !important;
+}
+
+.opacity .click-to-add {
+    opacity: 0;
+    transition: all .1s;
+}
+.opacity:hover .click-to-add {
+    opacity: 1;
 }
 </style>
