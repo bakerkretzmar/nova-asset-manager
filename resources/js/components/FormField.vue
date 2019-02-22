@@ -171,6 +171,7 @@ export default {
         add(file) {
             if (this.hasMaximum) return
             this.handleClose()
+            if (this.fileIDs.includes(file.id)) return
             this.value.push(file)
         },
 
@@ -209,6 +210,10 @@ export default {
             return this.files.filter(file => {
                 return file.basename.toLowerCase().includes(this.query.toLowerCase())
             })
+        },
+
+        fileIDs() {
+            return this.value.map(file => file.id)
         },
     },
 }
