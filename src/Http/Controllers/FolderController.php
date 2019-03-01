@@ -17,6 +17,8 @@ class FolderController extends AssetManagerController
     {
         $files = collect($this->storage->listContents($this->path));
 
+        $files = $this->filterDotfiles($files);
+
         $this->enrich($files);
 
         if ($request->has('mimes')) {
@@ -101,6 +103,16 @@ class FolderController extends AssetManagerController
         })->values();
 
         return $folders->merge($items);
+    }
+
+    /**
+     * Filter files, removing those with names beginning with a '.'.
+     */
+    protected function filterDotfiles($files)
+    {
+        return $files->filter(function ($value, $key) {
+            return ! Str::startsWith($value['basename'], '.');
+        });
     }
 
     /**
