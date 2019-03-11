@@ -1,5 +1,5 @@
 <template>
-    <default-field :field="field" :full-width-content="true">
+    <default-field :field="field" :errors="errors" :full-width-content="true">
         <template slot="field">
 
             <div class="flex flex-wrap">
