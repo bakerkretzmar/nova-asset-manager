@@ -11,6 +11,11 @@ class AssetManagerField extends Field
 
     public $showOnIndex = false;
 
+    public function disk(string $disk)
+    {
+        return $this->withMeta(['disk' => $disk]);
+    }
+
     public function filetypes(array $types)
     {
         return $this->withMeta(['filetypes' => $types]);

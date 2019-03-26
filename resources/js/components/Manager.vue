@@ -3,7 +3,7 @@
         <div class="relative min-h-loader">
             <div v-if="loading" class="flex items-center justify-center absolute pin z-50 h-loader bg-white"><loader class="text-60" /></div>
 
-            <Uploader :path="path" @reload="reload" />
+            <Uploader :path="path" :field="field" @reload="reload" />
 
             <div class="flex flex-wrap -mx-1">
 
@@ -62,6 +62,10 @@ export default {
         path: String,
         view: String,
         context: String,
+        field: {
+            tyle: Object,
+            required: false,
+        },
     },
 
     components: {
@@ -77,7 +81,10 @@ export default {
 
         deleteFolder() {
             Nova.request()
-                .post('/nova-vendor/nova-asset-manager/folders/delete', { path: this.path })
+                .post('/nova-vendor/nova-asset-manager/folders/delete', {
+                    disk: this.field && this.field.disk ? this.field.disk : '',
+                    path: this.path
+                })
                 .then(response => {
                     if (response.data == true) {
                         this.$toasted.show('Folder deleted!', { type: 'success' })

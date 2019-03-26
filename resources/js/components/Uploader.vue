@@ -55,6 +55,10 @@ import Progress from './partials/ProgressBar'
 export default {
     props: {
         path: String,
+        field: {
+            type: Object,
+            required: false,
+        },
     },
 
     components: { Progress },
@@ -128,7 +132,7 @@ export default {
             let data = new FormData()
 
             data.append('path', this.path)
-
+            data.append('disk', this.field && this.field.disk ? this.field.disk : '')
             data.append('file', file.original)
 
             Nova.request()

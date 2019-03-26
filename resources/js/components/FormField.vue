@@ -61,6 +61,7 @@
                             <Manager
                                 :path="path"
                                 :files="visibleFiles"
+                                :field="field"
                                 :view="view"
                                 context="field"
                                 :loading="loading"
@@ -143,6 +144,7 @@ export default {
             Nova.request()
                 .get('/nova-vendor/nova-asset-manager/folders/info', {
                     params: {
+                        disk: this.field.disk || '',
                         path: this.path,
                         mimes: this.field.filetypes || ['folder', 'image'],
                     },
