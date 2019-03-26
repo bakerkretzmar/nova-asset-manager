@@ -26,6 +26,11 @@ class AssetManagerField extends Field
         return $this->withMeta(['maximum' => $max]);
     }
 
+    public function navigable()
+    {
+        return $this->withMeta(['navigable' => true]);
+    }
+
 
 
     /**
