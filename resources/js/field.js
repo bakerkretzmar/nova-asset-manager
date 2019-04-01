@@ -6,5 +6,8 @@ Nova.booting((Vue, router) => {
     Vue.component('asset-manager-back-button', require('./components/partials/BackButton'))
     Vue.component('asset-manager-breadcrumbs', require('./components/partials/Breadcrumbs'))
     Vue.component('asset-manager-view-buttons', require('./components/partials/ViewButtons'))
+
+    Vue.component('asset-manager-form-grid-item', require('./components/partials/FormFieldGridItem'))
+
     Vue.component('asset-manager', require('./components/Manager'))
 })
