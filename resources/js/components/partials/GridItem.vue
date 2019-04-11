@@ -2,7 +2,7 @@
     <div class="griditem" @click="handleClick">
         <div class="flex flex-col h-40 rounded-lg border-2 border-50 text-70 hover:text-primary shadow cursor-pointer overflow-hidden relative">
 
-            <div v-if="context == 'field'" class="absolute pin opacity z-20 flex items-center justify-center text-lg text-white font-bold">Click to add</div>
+            <div v-if="context == 'field' || context == 'cms'" class="absolute pin opacity z-20 flex items-center justify-center text-lg text-white font-bold">Click to add</div>
 
             <file-icon
                 v-if="file.mime == 'folder'"

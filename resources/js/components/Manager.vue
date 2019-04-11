@@ -3,7 +3,7 @@
         <div class="relative min-h-loader">
             <div v-if="loading" class="flex items-center justify-center absolute pin z-50 h-loader bg-white"><loader class="text-60" /></div>
 
-            <Uploader :path="path" :field="field" @reload="reload" />
+            <Uploader :path="path" :field="field" :context="context" @reload="reload" />
 
             <div class="flex flex-wrap -mx-1">
 

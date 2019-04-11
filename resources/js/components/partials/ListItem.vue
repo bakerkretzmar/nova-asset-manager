@@ -19,7 +19,7 @@
                 {{ formatDate(file.timestamp) }}
             </div>
 
-            <div v-if="context == 'field'" class="py-1 my-auto ml-8 text-90 font-bold click-to-add">
+            <div v-if="context == 'field' || context == 'cms'" class="py-1 my-auto ml-8 text-90 font-bold click-to-add">
                 Click to add
             </div>
 

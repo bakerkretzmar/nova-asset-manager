@@ -19,10 +19,18 @@ class FileController extends AssetManagerController
 
         // Check size and dimensions!!
 
-        if ($this->storage->putFileAs($request->path, $request->file, $request->file->getClientOriginalName())) {
-            return response('success');
+        if ($request->get('context') == 'field') {
+            if ($this->storage->putFile($request->path, $request->file)) {
+                return response('success');
+            } else {
+                return response()->json(false);
+            }
         } else {
-            return response()->json(false);
+            if ($this->storage->putFileAs($request->path, $request->file, $request->file->getClientOriginalName())) {
+                return response('success');
+            } else {
+                return response()->json(false);
+            }
         }
     }
 

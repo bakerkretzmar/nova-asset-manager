@@ -55,6 +55,7 @@ import Progress from './partials/ProgressBar'
 export default {
     props: {
         path: String,
+        context: String,
         field: {
             type: Object,
             required: false,
@@ -134,6 +135,7 @@ export default {
             data.append('path', this.path)
             data.append('disk', this.field && this.field.disk ? this.field.disk : '')
             data.append('file', file.original)
+            data.append('context', this.context)
 
             Nova.request()
                 .post('/nova-vendor/nova-asset-manager/files/upload', data, config)
