@@ -28,7 +28,9 @@ export default {
 
     mounted() {
         if (!this.file.url) {
-            return this.src = this.file.path
+            this.src = this.file.path
+            this.loading = false
+            return
         }
 
         Minimum(
