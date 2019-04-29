@@ -22,12 +22,12 @@
                     </button>
                 </div>
 
-                <template v-for="file in files">
+                <template v-for="(file, index) in files">
 
                     <GridItem
                         v-if="view == 'grid'"
                         :context="context"
-                        :key="file.id"
+                        :key="index"
                         :file="file"
                         @navigate="navigateToPath"
                         @preview="preview"
@@ -36,7 +36,7 @@
                     <ListItem
                         v-else-if="view == 'list'"
                         :context="context"
-                        :key="file.id"
+                        :key="index"
                         :file="file"
                         @navigate="navigateToPath"
                         @preview="preview"

@@ -27,9 +27,7 @@ class FolderController extends AssetManagerController
 
         $files = $this->sort($files);
 
-        return response()->json([
-            'files' => $files,
-        ]);
+        return response()->json(compact('files'));
     }
 
     /**
@@ -76,9 +74,9 @@ class FolderController extends AssetManagerController
     protected function enrich($files)
     {
         $files->transform(function ($file, $key) {
-            $file['id'] = md5($file['path']);
+            // $file['id'] = md5($file['path']);
 
-            $file['url'] = $this->storage->url($file['path']);
+            // $file['url'] = $this->storage->url($file['path']);
 
             if ($file['type'] == 'dir') {
                 $file['mime'] = 'folder';

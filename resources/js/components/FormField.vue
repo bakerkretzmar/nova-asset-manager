@@ -6,11 +6,11 @@
 
                 <FormGridItem
                     v-for="(file, index) in value"
-                    :key="file.id"
+                    :key="index"
                     :file="file"
                     :index="index"
                     :length="value.length"
-                    @remove="remove(file.id)"
+                    @remove="remove(index)"
                     @move="reorder($event, index)"
                 />
 
@@ -173,14 +173,11 @@ export default {
         add(file) {
             if (this.hasMaximum) return
             this.handleClose()
-            if (this.fileIDs.includes(file.id)) return
             this.value.push(file)
         },
 
-        remove(id) {
-            this.value = this.value.filter(item => {
-                return item.id != id
-            })
+        remove(index) {
+            this.value.splice(index, 1)
         },
 
         reorder(distance, from) {
@@ -212,10 +209,6 @@ export default {
             return this.files.filter(file => {
                 return file.basename.toLowerCase().includes(this.query.toLowerCase())
             })
-        },
-
-        fileIDs() {
-            return this.value.map(file => file.id)
         },
     },
 }

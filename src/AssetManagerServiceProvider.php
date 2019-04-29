@@ -6,7 +6,6 @@ use Laravel\Nova\Nova;
 use Laravel\Nova\Events\ServingNova;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Bakerkretzmar\AssetManager\Http\Middleware\Authorize;
 
 class AssetManagerServiceProvider extends ServiceProvider
 {
@@ -29,7 +28,7 @@ class AssetManagerServiceProvider extends ServiceProvider
             return;
         }
 
-        Route::middleware(['nova', Authorize::class])
+        Route::middleware(['nova'])
             ->prefix('nova-vendor/nova-asset-manager')
             ->group(__DIR__.'/../routes/api.php');
     }
