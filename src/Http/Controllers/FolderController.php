@@ -76,7 +76,7 @@ class FolderController extends AssetManagerController
         $files->transform(function ($file, $key) {
             // $file['id'] = md5($file['path']);
 
-            // $file['url'] = $this->storage->url($file['path']);
+            $file['url'] = $this->storage->url($file['path']);
 
             if ($file['type'] == 'dir') {
                 $file['mime'] = 'folder';

@@ -29,7 +29,7 @@ export default {
     mounted() {
         Minimum(
             Nova.request()
-                .get(this.file.path, {
+                .get(this.file.url, {
                     responseType: 'blob',
                 })
         )
