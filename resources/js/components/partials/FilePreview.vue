@@ -27,6 +27,10 @@ export default {
     }),
 
     mounted() {
+        if (!this.file.url) {
+            return this.src = this.file.path
+        }
+
         Minimum(
             Nova.request()
                 .get(this.file.url, {
