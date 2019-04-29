@@ -28,7 +28,7 @@ export default {
 
     mounted() {
         if (!this.file.url) {
-            this.src = this.file.path
+            this.src = `/uploads/${this.file.path}`
             this.loading = false
             return
         }
