@@ -6,7 +6,7 @@
 
                 <FormGridItem
                     v-for="(file, index) in value"
-                    :key="index"
+                    :key="file.basename"
                     :file="file"
                     :index="index"
                     :length="value.length"
@@ -183,6 +183,7 @@ export default {
         reorder(distance, from) {
             let to = from + distance
             this.value.splice(to, 0, this.value.splice(from, 1)[0])
+            //
         },
 
         setInitialValue() {
