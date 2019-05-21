@@ -3,8 +3,8 @@
         <div v-if="loading" class="flex items-center justify-center absolute pin z-50 bg-white"><loader class="text-60" /></div>
 
         <file-icon
-            v-if="icon"
-            :type="'image'"
+            v-if="file.mime !== 'image'"
+            :type="file.mime"
             class="block w-1/3 m-auto"
         />
 
